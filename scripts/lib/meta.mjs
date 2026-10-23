@@ -53,10 +53,10 @@ export function officeName(d) {
 
 // 職種。key は読み込んだデータのキー
 export const JOBS = [
-  { key: 'gyosei', slug: 'gyosei', name: '一般行政職', desc: '役所で事務や技術の仕事をする職員です（教員・警察官・技能労務職などを除く）。ふつう「市役所の職員」「県庁の職員」というと、この人たちを指します。このサイトの年収やランキングは、断りがなければ一般行政職の数字です。' },
+  { key: 'gyosei', slug: 'gyosei', name: '一般行政職', title: '一般行政職（事務・技術の職員）', desc: '役所で事務や技術の仕事をする職員です（教員・警察官・技能労務職などを除く）。ふつう「市役所の職員」「県庁の職員」というと、この人たちを指します。このサイトの年収やランキングは、断りがなければ一般行政職の数字です。' },
   { key: 'all', slug: 'zen-shokushu', name: '全職種', desc: 'その団体で働く常勤の一般職員すべてです（一般行政職のほか、教員・警察官・消防職員・技能労務職などを含みます）。' },
-  { key: 'kyoiku', slug: 'kyoin', name: '教育公務員', desc: '公立学校の校長・教員などです。都道府県と政令市は公立小中学校・高校の先生の多くが入ります。政令市以外の市区町村は、市立の高校や幼稚園などの先生だけです（小中学校の先生の多くは県が給与を払うので、県の数字に入ります）。' },
-  { key: 'keisatsu', slug: 'keisatsu', name: '警察職', desc: '都道府県警察の警察官です（都道府県だけにあります）。' },
+  { key: 'kyoiku', slug: 'kyoin', name: '教育公務員', title: '公立学校の先生（教育公務員）', desc: '公立学校の校長・教員などです。都道府県と政令市は公立小中学校・高校の先生の多くが入ります。政令市以外の市区町村は、市立の高校や幼稚園などの先生だけです（小中学校の先生の多くは県が給与を払うので、県の数字に入ります）。' },
+  { key: 'keisatsu', slug: 'keisatsu', name: '警察職', title: '警察官（警察職）', desc: '都道府県警察の警察官です（都道府県だけにあります）。' },
   { key: 'ginou', slug: 'ginou', name: '技能労務職', desc: 'ごみ収集・学校給食・用務・運転などの現業の職員の全体です。' },
   { key: 'seisou', slug: 'seisou', name: '清掃職員', ref: true, desc: 'ごみ・し尿の収集運搬車の運転手、収集作業員、処理施設で働く職員です。' },
   { key: 'kyushoku', slug: 'kyushoku', name: '学校給食員', ref: true, desc: '学校給食の調理などをする職員です。' },
@@ -69,12 +69,12 @@ export const JOB_BY_KEY = new Map(JOBS.map((j) => [j.key, j]));
 
 // ランキングの区分
 export const GROUPS = [
-  { key: 'all', slug: '', name: '全国の自治体', short: '全国', kubun: [1, 2, 3, 4, 5, 6] },
-  { key: 'ken', slug: 'todofuken', name: '都道府県', short: '都道府県', office: '県庁', kubun: [1] },
-  { key: 'shi', slug: 'shi', name: '市（政令市を含む）', short: '市', office: '市役所', kubun: [2, 3] },
-  { key: 'seirei', slug: 'seirei', name: '政令指定都市', short: '政令市', office: '市役所', kubun: [2] },
-  { key: 'ku', slug: 'tokubetsuku', name: '東京23区', short: '23区', office: '区役所', kubun: [4] },
-  { key: 'chouson', slug: 'chouson', name: '町村', short: '町村', office: '町村役場', kubun: [5, 6] },
+  { key: 'all', slug: '', name: '全国の自治体', short: '全国', kubun: [1, 2, 3, 4, 5, 6], scope: (n) => `全国${n}自治体` },
+  { key: 'ken', slug: 'todofuken', name: '都道府県', short: '都道府県', office: '県庁', kubun: [1], scope: (n) => `${n}都道府県` },
+  { key: 'shi', slug: 'shi', name: '市（政令市を含む）', short: '市', office: '市役所', kubun: [2, 3], scope: (n) => `全国${n}市（政令市を含む）` },
+  { key: 'seirei', slug: 'seirei', name: '政令指定都市', short: '政令市', office: '政令市', kubun: [2], scope: (n) => `政令指定都市${n}市` },
+  { key: 'ku', slug: 'tokubetsuku', name: '東京23区', short: '23区', office: '区役所', kubun: [4], scope: () => '東京23区' },
+  { key: 'chouson', slug: 'chouson', name: '町村', short: '町村', office: '町村役場', kubun: [5, 6], scope: (n) => `全国${n}町村` },
 ];
 
 // ランキングの指標。get(d) が値（null は対象外）。desc は「高い順」
@@ -86,7 +86,7 @@ export const METRICS = [
   },
   {
     key: 'ras', slug: 'laspeyres', label: 'ラスパイレス指数', short: 'ラスパイレス', unit: '',
-    title: (g) => `${g.short === '全国' ? '' : g.short}ラスパイレス指数ランキング`,
+    title: (g) => `${g.key === 'all' ? '' : `${g.short}の`}ラスパイレス指数ランキング`,
     lead: '国家公務員の給料を100としたときの水準（年齢・学歴の違いをそろえて比べた指数）が高い順',
   },
   {

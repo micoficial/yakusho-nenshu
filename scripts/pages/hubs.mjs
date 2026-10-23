@@ -110,7 +110,7 @@ export function renderRanking(ctx, m, g, page) {
   const slice = rows.slice((page - 1) * per, page * per);
   const yr = reiwaYear(ctx.R);
   const title0 = `${m.title(g)}`;
-  const scope = g.key === 'all' ? `全国${comma(rows.length)}自治体` : `${g.name}${comma(rows.length)}団体`;
+  const scope = g.scope(comma(rows.length));
   const bc = breadcrumbs([['トップ', ''], ['ランキング', 'ranking/'], [m.label, g.key === 'all' && page === 1 ? null : rankPath(m, GROUPS[0])], ...(g.key === 'all' ? [] : [[g.short, page === 1 ? null : rankPath(m, g)]]), ...(page > 1 ? [[`${comma((page - 1) * per + 1)}位〜`, null]] : [])]);
   const base = rankPath(m, g);
   const notes = {
@@ -242,7 +242,7 @@ export function renderJob(ctx, j, page) {
   ];
   const body = `${bc.html}
 <header class="ph"><p class="eyebrow">令和${ctx.R}年（${yr}年）4月1日現在｜${comma(rows.length)}団体</p>
-<h1>${esc(j.name)}の年収ランキング（地方公務員）${page > 1 ? `（${comma((page - 1) * per + 1)}位〜）` : ''}</h1>
+<h1>${esc(j.title || j.name)}の年収ランキング${j.key === 'keisatsu' || j.key === 'kyoiku' ? '' : '（地方公務員）'}${page > 1 ? `（${comma((page - 1) * per + 1)}位〜）` : ''}</h1>
 <p class="lead">${esc(j.desc)}</p></header>
 <div class="kf kf-3">
 <div class="kf-i kf-main"><span>推計年収（団体の中央値）</span><b>${man(s.nenshu)}</b><em>${comma(s.n)}団体</em></div>
@@ -255,7 +255,7 @@ ${rankTable(slice, cols)}
 ${pager(base, page, pages, per)}`;
   const path = page > 1 ? `${base}${page}/` : base;
   return layout({
-    title: `${j.name}の年収ランキング（地方公務員）【${yr}年】${comma(rows.length)}団体${page > 1 ? `（${comma((page - 1) * per + 1)}位〜）` : ''}｜${SITE_NAME}`,
+    title: `${j.title || j.name}の年収ランキング${j.key === 'keisatsu' || j.key === 'kyoiku' ? '' : '（地方公務員）'}【${yr}年】${j.key === 'keisatsu' ? '47都道府県' : `${comma(rows.length)}団体`}${page > 1 ? `（${comma((page - 1) * per + 1)}位〜）` : ''}｜${SITE_NAME}`,
     description: `地方公務員の${j.name}の平均年収（推計）を団体ごとに比べたランキング。中央値は${man(s.nenshu)}、平均年齢の中央値は${age(s.age)}（令和${ctx.R}年・${comma(rows.length)}団体）。`,
     path, body, ld: [bc.ld],
   });
