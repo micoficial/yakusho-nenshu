@@ -1,0 +1,8 @@
+node_modules/
+dist/
+data/raw/
+data/raw.new/
+data/raw-data.tar.gz
+data/refresh.log
+.claude/
+*.log
