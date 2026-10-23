@@ -28,6 +28,8 @@ Jの依頼「AIで完全に作れて、一般の人には取りにくく、本�
 - このPC：タスク スケジューラ「mico-yakusho-nenshu-data-refresh」が毎週月曜9:15（PCが切れていたら次の起動時）に `scripts/scheduled-refresh.sh` を実行（Jが2026-10-23に許可）。日本の回線で取って控えを差し替え、作り直しを始める。ログ `data/refresh.log`。確認だけなら `bash scripts/scheduled-refresh.sh --check`
 
 ## 試して駄目だったこと・気をつけること
+- GitHub Actions（海外）からも soumu.go.jp・e-Stat は取れた（2026-10-23 の初回実行）。控え（data-latest）は予備
+- Actions が毎回 data/summary.json をコミットするので、手元から push する前に `git pull --rebase` が要る
 - 総務省の旧URL（`/iken/kyuyo.html` など）は404。今の入口は `/main_sosiki/jichi_gyousei/c-gyousei/teiin-kyuuyo02.html`
 - Excel の列の位置はファイル・年ごとに違う → 見出しの文字で探す。見出しの下の集計行（全地方公共団体など）の数値が見出しに混ざるので、数値は見出しに入れない
 - 6桁の給料（例 327,900円）を団体コードと取り違えた → 団体コードの検査数字で見分ける
