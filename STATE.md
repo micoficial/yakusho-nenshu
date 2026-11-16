@@ -7,7 +7,7 @@
 - 全国1,788団体（都道府県47・政令市20・市772・特別区23・町743・村183）の団体ページ＋ランキング・都道府県・職種別・年齢別など、全1,963ページ・約5,000万バイト（1ページの中央値23KB）
 - データの時点：総務省「地方公共団体別給与等の比較」令和7年（2025年4月1日現在、2025-12-25公表）＋過去4年（令和3〜6年）、e-Stat「地方公務員給与実態調査」令和7年（2026-08-27公開）、定員管理調査 令和7年
 - アクセス解析なし（Cookieなし）。Search Console は未登録（Jの Google アカウントの操作）
-- 2026-11-16 イチカラ事業本部（J の OK）：Search Console の確認ファイル `src/root/google08ebf2cdcabb4d55.html`（ほかの4本と同じ mico の Google 用）を足して push。登録とサイトマップの送信は事業本部が専用 Chrome で行う（記録は `workspace\AI社長室\biz\joho-sites\log.md`）
+- 2026-11-16 イチカラ事業本部（J の OK）：Search Console の確認ファイル `src/root/google08ebf2cdcabb4d55.html`（ほかの4本と同じ mico の Google 用）を足して push し、同じ日に Search Console へ登録（mico の Google）・sitemap.xml を送信・トップの登録をリクエスト済み。Bing Webmaster Tools にも取り込み済み（記録は `workspace\AI社長室\biz\joho-sites\log.md`）
 
 ## なぜこのテーマか（2026-10-23）
 Jの依頼「AIで完全に作れて、一般の人には取りにくく、本来は有料のサービスにある情報を無料で出し、圧倒的なアクセスを取る」の5本のうちの1本（1本目は会社の通信簿）。
